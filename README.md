@@ -1,2 +1,2 @@
-# IBM_PROJECT
-Number Guessing Game 
+# IBM_PROJECCT
+Number Guessing Game
