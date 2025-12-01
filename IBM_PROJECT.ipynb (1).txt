@@ -1,0 +1,106 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class NumberGuessingGame:\n",
+        "    def __init__(self, lower_bound=1, upper_bound=100):\n",
+        "\n",
+        "        if lower_bound >= upper_bound:\n",
+        "            raise ValueError(\"Lower bound must be less than upper bound.\")\n",
+        "        self.lower_bound = lower_bound\n",
+        "        self.upper_bound = upper_bound\n",
+        "        self.secret_number = random.randint(self.lower_bound, self.upper_bound)\n",
+        "        self.attempts = 0\n",
+        "        self.game_over = False\n",
+        "\n",
+        "    def make_guess(self, guess):\n",
+        "        self.attempts += 1  # Increment attempts with each guess\n",
+        "        if guess < self.secret_number:\n",
+        "            return \"Too low\"\n",
+        "        elif guess > self.secret_number:\n",
+        "            return \"Too high\"\n",
+        "        else:\n",
+        "            self.game_over = True\n",
+        "            return \"Correct\"\n",
+        "\n",
+        "    def get_attempts(self):\n",
+        "        return self.attempts\n",
+        "\n",
+        "    def is_game_over(self):\n",
+        "\n",
+        "        return self.game_over\n",
+        "\n",
+        "    def get_secret_number(self):\n",
+        "\n",
+        "        if self.game_over:\n",
+        "            return self.secret_number\n",
+        "        else:\n",
+        "            return None # Or raise an error if preferred\n",
+        "\n",
+        "# Example Usage:\n",
+        "if __name__ == \"__main__\":\n",
+        "    game = NumberGuessingGame(1, 50)\n",
+        "    print(f\"Guess a number between {game.lower_bound} and {game.upper_bound}.\")\n",
+        "\n",
+        "    while not game.is_game_over():\n",
+        "        try:\n",
+        "            player_guess = int(input(\"Enter your guess: \"))\n",
+        "            if not (game.lower_bound <= player_guess <= game.upper_bound):\n",
+        "                print(f\"Please enter a number within the range {game.lower_bound}-{game.upper_bound}.\")\n",
+        "                continue\n",
+        "\n",
+        "            feedback = game.make_guess(player_guess)\n",
+        "            print(f\"Feedback: {feedback}\")\n",
+        "            print(f\"Attempts: {game.get_attempts()}\")\n",
+        "\n",
+        "            if feedback == \"Correct\":\n",
+        "                print(f\"Congratulations! You guessed the number {game.get_secret_number()} in {game.get_attempts()} attempts.\")\n",
+        "                break # Exit loop after correct guess\n",
+        "\n",
+        "        except ValueError:\n",
+        "            print(\"Invalid input. Please enter a valid integer.\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "HtdKCGnrP-Z1",
+        "outputId": "6ee940c8-7ec1-4077-8233-89ddecf2ef19"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Guess a number between 1 and 50.\n",
+            "Enter your guess: 38\n",
+            "Feedback: Too low\n",
+            "Attempts: 1\n",
+            "Enter your guess: 40\n",
+            "Feedback: Correct\n",
+            "Attempts: 2\n",
+            "Congratulations! You guessed the number 40 in 2 attempts.\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
